@@ -1,9 +1,7 @@
 package com.monpremierprojet.hello_spring;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @RestController
@@ -24,6 +22,14 @@ public class UserController {
     @PostMapping("/users")
     public User createUser(@RequestBody User user) {
         return userService.save(user);
+    }
+
+    // Nouvel endpoint pour modifier un utilisateur existant
+    @PutMapping("/users/{id}")
+    public User updateUser(
+            @PathVariable Long id, // Récupere l'ID de l'url
+            @RequestBody User userDetails ) { // Récupere le corps JSON pour les nouvelles donnees
+        return userService.update(id, userDetails);
     }
 
 }
