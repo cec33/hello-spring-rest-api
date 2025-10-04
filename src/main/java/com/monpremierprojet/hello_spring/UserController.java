@@ -1,6 +1,5 @@
 package com.monpremierprojet.hello_spring;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
@@ -8,12 +7,16 @@ import java.util.List;
 @RestController
 public class UserController {
 
-    @Autowired
-    private UserRepository userRepository; // On injecte le Repository JPA
+    // Injecter le Service, non plus le Repository
+    private final UserService userService;
+
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
 
     @GetMapping("/users")
-    public List<User> getAllUsers() {
-        return userRepository.findAll(); // La méthode générée par Spring Data
+    public List<User> findAll() {
+        return userService.findAll(); // Appelle la methode du Service qui est mise en cache
     }
 
 
