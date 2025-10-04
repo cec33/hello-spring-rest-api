@@ -15,11 +15,16 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    // 2. C'est ICI que l on met le Caching : Spring enveloppe cette methode.
     @Cacheable("users")
     public List<User> findAll() {
         System.out.println(">>> EXECUTION DE LA REQUETE BASE DE DONNEES (doit etre vu 1 seule fois)");
         return userRepository.findAll(); // Appel reel a al base de donnees
+    }
+
+    // Logique pour sauvegarder un nouvel utilisateur
+    public User save(User user) {
+        System.out.println(">>> ENREGISTREMENT D UN NOUVEL UTILISATEUR en base de donnees");
+        return userRepository.save(user);
     }
 
 }
