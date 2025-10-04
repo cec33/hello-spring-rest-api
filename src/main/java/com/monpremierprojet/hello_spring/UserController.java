@@ -1,5 +1,6 @@
 package com.monpremierprojet.hello_spring;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,12 +25,18 @@ public class UserController {
         return userService.save(user);
     }
 
-    // Nouvel endpoint pour modifier un utilisateur existant
     @PutMapping("/users/{id}")
     public User updateUser(
             @PathVariable Long id, // Récupere l'ID de l'url
             @RequestBody User userDetails ) { // Récupere le corps JSON pour les nouvelles donnees
         return userService.update(id, userDetails);
+    }
+
+    // Nouvel endpoint pour supprimer un utilisateur
+    @DeleteMapping("/users/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT) // Indique que le succès retourne 204
+    public void deleteUser(@PathVariable Long id) {
+        userService.delete(id);
     }
 
 }
